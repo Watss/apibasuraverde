@@ -11,7 +11,7 @@
     "dev": "concurrently \"tsc -w\" \"nodemon dist/index.js\""
   },
   "engines": {
-    "node": "8"
+    "node": "10"
   },
   "predeploy": [
     "npm --prefix \"%RESOURCE_DIR%\" run lint"
