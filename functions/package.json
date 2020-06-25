@@ -7,15 +7,20 @@
     "shell": "npm run build && firebase functions:shell",
     "start": "npm run shell",
     "deploy": "firebase deploy --only functions",
-    "logs": "firebase functions:log"
+    "logs": "firebase functions:log",
+    "dev": "concurrently \"tsc -w\" \"nodemon dist/index.js\""
   },
   "engines": {
     "node": "8"
   },
   "main": "lib/index.js",
   "dependencies": {
-    "firebase-admin": "^8.10.0",
-    "firebase-functions": "^3.6.1"
+    "firebase": "^7.15.4",
+    "firebase-admin": "^8.12.1",
+    "firebase-functions": "^3.7.0",
+    "inversify": "^5.0.1",
+    "inversify-express-utils": "^6.3.2",
+    "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {
     "tslint": "^5.12.0",
