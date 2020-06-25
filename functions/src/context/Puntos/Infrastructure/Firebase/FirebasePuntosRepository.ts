@@ -8,11 +8,27 @@ export class FirebasePuntosRepository implements PuntosRepository{
     
 
     
-    getAll(): Promise<any> {
-        throw new Error("Method not implemented.");
+    async getAll(): Promise<any> {
+        const db = admin.firestore()
+        const docs = await db.collection('/puntos').orderBy('id','asc').get()
+       
+        const listadoPuntos : Punto[] = [];
+        docs.forEach(
+          (doc) => {
+            var data = doc.data();
+            var puntoRecogido = new Punto(
+                data.id,data.titulo,data.descripcion,data.latitud,data.longitud
+            )
+            listadoPuntos.push(puntoRecogido);
+          }
+        );
+        
+       
+
+        return listadoPuntos;
     }
     async saveAll(listadoPuntos: Punto[]): Promise<any> {
-        await  listadoPuntos.forEach( async (Punto) =>  await this.savePunto (Punto) )
+         listadoPuntos.forEach(  (asdPunto) =>   this.savePunto (asdPunto) )
         return "coso";
     }
 
@@ -27,7 +43,7 @@ export class FirebasePuntosRepository implements PuntosRepository{
         });
         console.log(savePunto)  
 
-        return true;
+        return savePunto;
     }
     
 }

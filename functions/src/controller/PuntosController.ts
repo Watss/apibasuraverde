@@ -24,21 +24,31 @@ export class PuntosController implements interfaces.Controller {
     @httpGet("/getAll")
     async getAll(req: express.Request, res: express.Response, next: express.NextFunction){
         //
-        try {
-            return this.getAllPuntos.getAllPuntos(); 
+        try { 
+             res.status(200).send(await this.getAllPuntos.getAllPuntos());
         } catch (error) {
-            return [];
+             res.status(500).send('f')
         }   
         
     }
 
     @httpGet("/saveAll")
     async saveAll(req: express.Request, res: express.Response, next: express.NextFunction){
-       var listadoPuntos : Punto[] = []; 
+        var listadoPuntos : Punto[] = [];
+        var data = puntosJson;
+       
+        for (var clave in data) {
+            if (data.hasOwnProperty(clave)) {
+                var punto : Punto = new Punto(data[clave].id,data[clave].titulo, data[clave].descripcion, data[clave].latitud.toString() , data[clave].longitud.toString());
+                console.log('punto ' +punto.titulo + ' Creado con Exito Tipo: ');
+                listadoPuntos.push(punto);
+              }
+        }
         try {
-            return this.saveAllPuntos.saveAllPuntos(listadoPuntos)
+            var respuesta = await this.saveAllPuntos.saveAllPuntos(listadoPuntos)
+            res.status(200).send(respuesta);
         } catch (error) {
-            return [];
+            res.status(500).send('f')
         }   
         
     } 

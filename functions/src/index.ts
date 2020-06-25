@@ -38,6 +38,6 @@ server.setConfig((app) => {
   app.use(bodyParser.json());
 });
 
-let app = server.build();
+let appServer = server.build();
 
-export const api = functions.https.onRequest(app);
+export const api = functions.https.onRequest(appServer);
